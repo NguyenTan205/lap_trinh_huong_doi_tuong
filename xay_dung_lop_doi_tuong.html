@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <script>
+        (function(){
+
+            var createEmbedFrame = function(){
+                var uid                   = "JSFEMB_" + (~~(new Date().getTime() / 86400000))
+                var uriOriginal           = "https://jsfiddle.net/codegym/L5dcpys8/21/embed/js"
+                var uriOriginalNoProtocol = uriOriginal.split("//").pop()
+                var uriEmbedded           = "https://jsfiddle.net/L5dcpys8/21/embedded/js/?username=codegym"
+                var currentSlug           = "L5dcpys8"
+                var target                = document.querySelector("script[src*='" + uriOriginalNoProtocol + "']")
+                var iframe                = document.createElement("iframe")
+
+                iframe.src               = uriEmbedded
+                iframe.id                = uid
+                iframe.width             = "100%"
+                iframe.height            = "0"
+                iframe.frameBorder       = "0"
+                iframe.allowtransparency = true
+                iframe.sandbox           = "allow-modals allow-forms allow-same-origin allow-scripts allow-popups allow-top-navigation-by-user-activation allow-downloads"
+                iframe.allow             = "midi; geolocation; microphone; camera; display-capture; encrypted-media; speaker-selection;"
+
+                target.parentNode.insertBefore(iframe, target.nextSibling)
+
+                var setHeight = function(data){
+                    if (data.slug === currentSlug) {
+                        var height = data.height <= 0 ? 400 : data.height + 50
+                        iframe.height = height
+                    }
+                }
+
+                var listeners = function(event){
+                    var eventName = event.data[0]
+                    var data      = event.data[1]
+
+                    switch (eventName) {
+                        case "embed":
+                            setHeight(data)
+                        case "resultsFrame":
+                            setHeight(data)
+                    }
+                }
+
+                window.addEventListener("message", listeners, false)
+            }
+
+            setTimeout(createEmbedFrame, 5)
+
+        }).call(this)
+        let MyDate = function (day, month, year) {
+            this.day = day;
+            this.month = month;
+            this.year = year;
+            this.getDay = function () {
+                return this.day;
+            }
+            this.getMonth = function () {
+                return this.month;
+            }
+            this.getYear = function () {
+                return this.year;
+            }
+            this.setDay = function (day) {
+                this.day = day;
+            }
+            this.setMonth = function (month) {
+                this.month = month;
+            }
+            this.setYear = function (year) {
+                this.year = year;
+            }
+        }
+        let date = new MyDate(2,2,2007);
+        date.setDay(10);
+        date.setMonth(10);
+        date.setYear(2019);
+        let day = date.getDay();
+        let month = date.getMonth();
+        let year = date.getYear();
+        alert(day + '/' + month + '/' + year);
+
+    </script>
+
+</body>
+</html>
