@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <script>
+        class Mobile {
+            constructor(name) {
+                this.name = name;
+                this.battery = 100;
+                this.isOn = false;
+                this.draftMessage = '';
+                this.inbox = [];
+                this.sentMessages = [];
+            }
+
+            // Kiểm tra trạng thái điện thoại
+            checkStatus() {
+                return this.isOn ? `${this.name} đang bật` : `${this.name} đang tắt`;
+            }
+
+            // Bật điện thoại
+            turnOn() {
+                if (this.battery > 0) {
+                    this.isOn = true;
+                    this.battery--;
+                    console.log(`${this.name} đã bật`);
+                } else {
+                    console.log(`${this.name} hết pin, không thể bật`);
+                }
+            }
+
+            // Tắt điện thoại
+            turnOff() {
+                this.isOn = false;
+                this.battery--;
+                console.log(`${this.name} đã tắt`);
+            }
+
+            // Sạc pin
+            chargeBattery() {
+                if (this.battery < 100) {
+                    this.battery++;
+                }
+            }
+
+            // Soạn tin nhắn
+            composeMessage(message) {
+                if (this.isOn) {
+                    this.draftMessage = message;
+                    this.battery--;
+                    console.log(`${this.name} đang soạn tin nhắn: "${message}"`);
+                } else {
+                    console.log(`${this.name} đang tắt, không thể soạn tin nhắn`);
+                }
+            }
+
+            // Gửi tin nhắn
+            sendMessage(receiver) {
+                if (this.isOn && this.draftMessage !== '') {
+                    receiver.receiveMessage(this.draftMessage);
+                    this.sentMessages.push(this.draftMessage);
+                    console.log(`${this.name} đã gửi tin nhắn: "${this.draftMessage}" đến ${receiver.name}`);
+                    this.draftMessage = '';
+                    this.battery--;
+                } else {
+                    console.log(`${this.name} không thể gửi tin nhắn (điện thoại tắt hoặc chưa soạn tin nhắn)`);
+                }
+            }
+
+            // Nhận tin nhắn
+            receiveMessage(message) {
+                if (this.isOn) {
+                    this.inbox.push(message);
+                    this.battery--;
+                }
+            }
+
+            // Xem tin nhắn trong hộp thư đến
+            viewInbox() {
+                if (this.isOn) {
+                    console.log(`Hộp thư đến của ${this.name}:`);
+                    this.inbox.forEach((msg, index) => {
+                        console.log(`${index + 1}: ${msg}`);
+                    });
+                    this.battery--;
+                } else {
+                    console.log(`${this.name} đang tắt, không thể xem hộp thư đến`);
+                }
+            }
+
+            // Xem tin nhắn đã gửi
+            viewSentMessages() {
+                if (this.isOn) {
+                    console.log(`Tin nhắn đã gửi của ${this.name}:`);
+                    this.sentMessages.forEach((msg, index) => {
+                        console.log(`${index + 1}: ${msg}`);
+                    });
+                    this.battery--;
+                } else {
+                    console.log(`${this.name} đang tắt, không thể xem tin nhắn đã gửi`);
+                }
+            }
+        }
+
+        // Tạo hai đối tượng điện thoại
+        let nokia = new Mobile('Nokia');
+        let iphone = new Mobile('iPhone');
+
+        // Sử dụng các chức năng
+        nokia.turnOn();
+        iphone.turnOn();
+
+        nokia.composeMessage('Chào bạn, mình là Nokia');
+        nokia.sendMessage(iphone);
+
+        iphone.viewInbox();
+
+    </script>
+</body>
+</html>
