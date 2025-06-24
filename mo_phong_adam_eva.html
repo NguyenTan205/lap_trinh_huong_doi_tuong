@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Adam và Eva ăn táo</title>
+</head>
+<body>
+<script>
+    // Lớp Apple
+    class Apple {
+        #weight = 10;
+
+        getWeight() {
+            return this.#weight;
+        }
+
+        decrease() {
+            if (this.#weight > 0) {
+                this.#weight--;
+            } else {
+                console.log("Quả táo đã hết rồi.");
+            }
+        }
+
+        isEmpty() {
+            return this.#weight <= 0;
+        }
+    }
+
+    // Lớp Human
+    class Human {
+        constructor(name, gender, weight) {
+            this.name = name;
+            this.gender = gender;
+            this.weight = weight;
+        }
+
+        say(message) {
+            console.log(`${this.name} nói: "${message}"`);
+        }
+
+        eat(apple) {
+            if (!apple.isEmpty()) {
+                this.weight++;
+                apple.decrease();
+                console.log(`${this.name} đã ăn một miếng táo. Cân nặng hiện tại: ${this.weight}kg. Khối lượng táo còn: ${apple.getWeight()}`);
+            } else {
+                console.log(`${this.name} nói: "Không còn táo để ăn nữa!"`);
+            }
+        }
+
+        checkApple(apple) {
+            console.log(`Khối lượng táo còn: ${apple.getWeight()}`);
+        }
+
+        getInfo() {
+            console.log(`Tên: ${this.name}, Giới tính: ${this.gender}, Cân nặng: ${this.weight}kg`);
+        }
+    }
+
+    // Khởi tạo đối tượng
+    let apple = new Apple();
+    let adam = new Human("Adam", "Nam", 75);
+    let eva = new Human("Eva", "Nữ", 47);
+
+    // Bắt đầu câu chuyện
+    adam.say("Chào Eva! Cùng ăn táo nhé.");
+    eva.say("Vâng Adam, cùng ăn thôi!");
+
+    while (!apple.isEmpty()) {
+        adam.eat(apple);
+        if (apple.isEmpty()) break; // Kiểm tra táo đã hết chưa trước khi Eva ăn
+        eva.eat(apple);
+    }
+
+    adam.say("Táo đã hết rồi.");
+    eva.say("Chúng ta no rồi!");
+
+    adam.getInfo();
+    eva.getInfo();
+</script>
+</body>
+</html>
