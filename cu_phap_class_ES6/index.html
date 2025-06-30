@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+      table, td, th {
+        border: 1px solid black;
+        text-align: center;
+        border-collapse: collapse;
+      }
+    </style>
+</head>
+<body>
+  <table>
+    <thead>
+    <tr>
+      <th>name</th>
+      <th>age</th>
+      <th>studentID</th>
+    </tr>
+    </thead>
+    <tbody id="dulieu"></tbody>
+  </table>
+  <script>
+
+    class Student {
+      constructor(name, age, studentID) {
+        this.name = name;
+        this.age = age;
+        this.studentID = studentID;
+      }
+    }
+    const danhsachsinhvien = [];
+    const student_1 = new Student('Nguyễn Văn A', '20', 'MSV001');
+    danhsachsinhvien.push(student_1);
+    danhsachsinhvien.push(new Student('Nguyễn Văn B', '20', 'MSV002'));
+    danhsachsinhvien.push(new Student('Nguyễn Văn C', '20', 'MSV003'));
+
+    function renderStudentTable () {
+      const dulieu = document.getElementById('dulieu');
+      for (let i = 0; i < danhsachsinhvien.length; i++) {
+        dulieu.innerHTML += `<tr>
+                            <td>${danhsachsinhvien[i].name}</td>
+                            <td>${danhsachsinhvien[i].age}</td>
+                            <td>${danhsachsinhvien[i].studentID}</td>
+                            </tr>`
+      }
+    }
+    renderStudentTable();
+  </script>
+</body>
+</html>
